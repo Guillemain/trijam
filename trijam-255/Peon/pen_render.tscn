@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bf850po8xbkpp"]
+[gd_scene load_steps=12 format=3 uid="uid://d3go3s3boxmqv"]
 
 [ext_resource type="Script" path="res://Peon/pen_render.gd" id="1_f7hlr"]
 [ext_resource type="Texture2D" uid="uid://ds56kxccl6v6b" path="res://Peon/Frames/frames_peon0005.png" id="1_jupl6"]

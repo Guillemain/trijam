@@ -1,4 +1,5 @@
 extends AnimatableBody2D
+class_name Peon
 
 enum EPeonType {DEVIL, INNOCENT}
 @export var peonType := EPeonType.INNOCENT
@@ -15,7 +16,7 @@ func _ready():
 func _process(_delta):
 	pass
 
-func _on_hit():
+func hit():
 	if isAlive:
 		isAlive = false
 		isKilled.emit()

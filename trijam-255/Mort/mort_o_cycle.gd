@@ -9,17 +9,25 @@ signal hitATrunk
 @export var motionVector := Vector2(0.0, 0.0)
 @export var isOnFloor := true
 signal startJump
+signal stopJump
+
+var numberFrameJumpPressed := 0
+const RECENT_JUMP_FRAME_NB := 5
 
 @export_group("Attack")
 var isAttacking := false
 signal startAttack
 signal stopAttack
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-
+func _ready():
+	$ScytheArea.set_deferred("disabled", true)
 
 func _physics_process(delta):
+	if Input.is_action_pressed("jump"):
+		numberFrameJumpPressed += 1
+	else:
+		numberFrameJumpPressed = 0
+	
 	# Add the gravity.
 	if not isOnFloor:
 		if !Input.is_action_pressed("jump") and motionVector.y > 0:
@@ -28,7 +36,7 @@ func _physics_process(delta):
 			motionVector.y += normalGravity * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and isOnFloor:
+	if isOnFloor and isJumpRecentlyPressed():
 		motionVector.y = jumpForce
 		isOnFloor = false
 		startJump.emit()
@@ -46,9 +54,11 @@ func _physics_process(delta):
 			print("Hit a trunk")
 		elif collider.get_collision_layer_value(2):
 			# We collided with floor
-			isOnFloor = true
-			motionVector.y = 0.0
-			print("isOnFloor")
+			if !isOnFloor:
+				isOnFloor = true
+				motionVector.y = 0.0
+				stopJump.emit()
+				print("isOnFloor")
 
 func _process(_delta):
 	# Check attack
@@ -56,9 +66,13 @@ func _process(_delta):
 		isAttacking = true
 		startAttack.emit()
 		$AttackDuration.start()
+		$ScytheArea.set_deferred("disabled", false)
 		print("Attack started")
 
 func _on_attack_duration_timeout():
 	isAttacking = false
+	$ScytheArea.set_deferred("disabled", true)
 	stopAttack.emit()
 
+func isJumpRecentlyPressed():
+	return Input.is_action_pressed("jump") and (numberFrameJumpPressed <= RECENT_JUMP_FRAME_NB)
