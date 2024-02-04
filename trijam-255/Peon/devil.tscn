@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bb8phikbuvpaw"]
+
+[ext_resource type="PackedScene" uid="uid://b0nr5ynvf8vak" path="res://Peon/peon.tscn" id="1_k6gtk"]
+
+[node name="Peon" instance=ExtResource("1_k6gtk")]
+peonType = 0
