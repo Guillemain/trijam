@@ -32,7 +32,7 @@ a = Vector2(-2, 683)
 position = Vector2(175, 543)
 
 [node name="Level" type="Node2D" parent="."]
-position = Vector2(1, 0)
+position = Vector2(1, -1)
 script = ExtResource("2_c64df")
 speed = 600.0
 isLevelMoving = true

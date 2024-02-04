@@ -27,6 +27,7 @@ scale = Vector2(1.49414, 0.854874)
 texture = ExtResource("1_vru3r")
 
 [node name="AttackDuration" type="Timer" parent="."]
+wait_time = 0.2
 
 [node name="ScytheArea" type="Area2D" parent="."]
 position = Vector2(128, 0)
@@ -34,7 +35,7 @@ collision_layer = 8
 collision_mask = 8
 script = ExtResource("3_6c2rx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ScytheArea"]
+[node name="Collider" type="CollisionShape2D" parent="ScytheArea"]
 shape = SubResource("RectangleShape2D_33n8q")
 debug_color = Color(0.980392, 0, 0.368627, 0.419608)
 

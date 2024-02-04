@@ -20,7 +20,7 @@ signal startAttack
 signal stopAttack
 
 func _ready():
-	$ScytheArea.set_deferred("disabled", true)
+	$ScytheArea/Collider.set_deferred("disabled", true)
 
 func _physics_process(delta):
 	if Input.is_action_pressed("jump"):
@@ -66,13 +66,15 @@ func _process(_delta):
 		isAttacking = true
 		startAttack.emit()
 		$AttackDuration.start()
-		$ScytheArea.set_deferred("disabled", false)
+		$ScytheArea/Collider.set_deferred("disabled", false)
 		print("Attack started")
 
 func _on_attack_duration_timeout():
-	isAttacking = false
-	$ScytheArea.set_deferred("disabled", true)
-	stopAttack.emit()
+	if isAttacking:
+		isAttacking = false
+		$ScytheArea/Collider.set_deferred("disabled", true)
+		print("Attack disabled")
+		stopAttack.emit()
 
 func isJumpRecentlyPressed():
 	return Input.is_action_pressed("jump") and (numberFrameJumpPressed <= RECENT_JUMP_FRAME_NB)
