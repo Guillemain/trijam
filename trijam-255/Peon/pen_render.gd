@@ -10,6 +10,7 @@ func _ready():
 	
 	if(mechant):
 		$AnimatedSprite2D.animation = "mechant"
+		($AnimatedSprite2D as AnimatedSprite2D).modulate = Color.INDIAN_RED
 	$AnimatedSprite2D.frame = randi_range(0,3) # inclusive 
 
 

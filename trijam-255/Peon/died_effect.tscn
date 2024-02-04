@@ -78,7 +78,7 @@ animations = [{
 script = ExtResource("1_pg512")
 
 [node name="Explosion" type="AnimatedSprite2D" parent="."]
-position = Vector2(65, -19)
+position = Vector2(-18, -9)
 scale = Vector2(0.805, 0.805)
 sprite_frames = SubResource("SpriteFrames_qxt76")
 frame = 9

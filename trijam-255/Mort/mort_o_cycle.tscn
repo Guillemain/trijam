@@ -46,4 +46,5 @@ position = Vector2(-10, -85)
 scale = Vector2(0.539273, 0.539273)
 
 [connection signal="startAttack" from="." to="MortRendere" method="_on_mortocycle_start_attack"]
+[connection signal="startJump" from="." to="MortRendere" method="_on_mortocycle_start_jump"]
 [connection signal="timeout" from="AttackDuration" to="." method="_on_attack_duration_timeout"]
