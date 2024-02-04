@@ -1,0 +1,67 @@
+[gd_scene load_steps=8 format=3 uid="uid://c74p6yghswvn"]
+
+[ext_resource type="PackedScene" uid="uid://3qi8m1jqrino" path="res://Mort/mort_o_cycle.tscn" id="1_1uop1"]
+[ext_resource type="Script" path="res://Level.gd" id="2_c64df"]
+[ext_resource type="PackedScene" uid="uid://b0nr5ynvf8vak" path="res://Peon/peon.tscn" id="2_lnovw"]
+[ext_resource type="PackedScene" uid="uid://bw3ogj7xiaj3i" path="res://Trunk/trunk.tscn" id="3_tgrgu"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_gj4k8"]
+a = Vector2(-217, 0)
+b = Vector2(989, 0)
+
+[sub_resource type="GDScript" id="GDScript_buvbj"]
+script/source = "extends Area2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	body_entered.connect(killObject)
+
+func killObject(object):
+	print(\"Object killed : \" + object.get_name())
+	object.queue_free()
+"
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_ju4xx"]
+a = Vector2(-2, 683)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Mort-o-cycle" parent="." instance=ExtResource("1_1uop1")]
+position = Vector2(175, 544)
+
+[node name="Level" type="Node2D" parent="."]
+script = ExtResource("2_c64df")
+isLevelMoving = true
+trunk = ExtResource("3_tgrgu")
+
+[node name="ToMove" type="Node2D" parent="Level"]
+
+[node name="Peon" parent="Level/ToMove" instance=ExtResource("2_lnovw")]
+position = Vector2(1071, 601)
+
+[node name="Trunk" parent="Level/ToMove" instance=ExtResource("3_tgrgu")]
+position = Vector2(609, 600)
+
+[node name="Spawn" type="Node2D" parent="Level"]
+position = Vector2(1291, 597)
+
+[node name="SpawnTimer" type="Timer" parent="Level"]
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(175, 598)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(-2, 2)
+shape = SubResource("SegmentShape2D_gj4k8")
+debug_color = Color(0.956863, 0, 0.52549, 0.419608)
+
+[node name="KillZone" type="Area2D" parent="."]
+position = Vector2(-267, 0)
+script = SubResource("GDScript_buvbj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KillZone"]
+shape = SubResource("SegmentShape2D_ju4xx")
+debug_color = Color(0.647059, 0.521569, 0, 0.419608)
+
+[connection signal="timeout" from="Level/SpawnTimer" to="Level" method="randomSpawn"]

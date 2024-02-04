@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0nr5ynvf8vak"]
+
+[ext_resource type="Texture2D" uid="uid://bd38e2ar0j8jt" path="res://icon.svg" id="1_ayyln"]
+[ext_resource type="Script" path="res://Peon/peon.gd" id="1_vj08f"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oncc7"]
+size = Vector2(127, 126)
+
+[node name="Peon" type="AnimatableBody2D"]
+position = Vector2(0, 2)
+sync_to_physics = false
+script = ExtResource("1_vj08f")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 0, 1, 1)
+position = Vector2(0, -67)
+texture = ExtResource("1_ayyln")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, -67)
+shape = SubResource("RectangleShape2D_oncc7")

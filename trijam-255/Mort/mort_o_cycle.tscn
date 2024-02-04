@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://3qi8m1jqrino"]
+
+[ext_resource type="Texture2D" uid="uid://bd38e2ar0j8jt" path="res://icon.svg" id="1_vru3r"]
+[ext_resource type="Script" path="res://Mort/mort_o_cycle.gd" id="1_x7gfg"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jgv20"]
+size = Vector2(190, 107)
+
+[node name="Mort-o-cycle" type="CharacterBody2D"]
+slide_on_ceiling = false
+floor_stop_on_slope = false
+floor_constant_speed = true
+script = ExtResource("1_x7gfg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_jgv20")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.49414, 0.854874)
+texture = ExtResource("1_vru3r")
+
+[node name="AttackDuration" type="Timer" parent="."]
+
+[connection signal="timeout" from="AttackDuration" to="." method="_on_attack_duration_timeout"]

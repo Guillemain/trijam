@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://c74p6yghswvn"]
+
+[ext_resource type="PackedScene" uid="uid://3qi8m1jqrino" path="res://Mort/mort_o_cycle.tscn" id="1_1uop1"]
+[ext_resource type="Script" path="res://Mort/mort_o_cycle.gd" id="2_2svl7"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_gj4k8"]
+a = Vector2(-115, 1)
+b = Vector2(121, 1)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Mort-o-cycle" parent="." instance=ExtResource("1_1uop1")]
+position = Vector2(175, 544)
+script = ExtResource("2_2svl7")
+JUMP_VELOCITY = -500.0
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(175, 598)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("SegmentShape2D_gj4k8")
