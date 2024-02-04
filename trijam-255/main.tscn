@@ -28,10 +28,12 @@ a = Vector2(-2, 683)
 [node name="Node2D" type="Node2D"]
 
 [node name="Mort-o-cycle" parent="." instance=ExtResource("1_1uop1")]
-position = Vector2(175, 544)
+position = Vector2(175, 543)
 
 [node name="Level" type="Node2D" parent="."]
+position = Vector2(1, 0)
 script = ExtResource("2_c64df")
+speed = 600.0
 isLevelMoving = true
 trunk = ExtResource("3_tgrgu")
 

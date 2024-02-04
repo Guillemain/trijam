@@ -20,10 +20,10 @@ func _ready():
 	startNextSpawnTimer()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(_delta):
+func _physics_process(delta):
 	if isLevelMoving:
 		# move all of its childs.
-		var motionVector := Vector2(-speed, 0.0)
+		var motionVector := Vector2(-speed * delta, 0.0)
 		for child in $ToMove.get_children():
 			if child is PhysicsBody2D:
 				child.move_and_collide(motionVector)
