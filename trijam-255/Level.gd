@@ -1,18 +1,20 @@
 extends Node2D
 
-@export var speed:= 20.0
+@export var speed := 450.0
+@export var currentSpeedFactor := 1.0
+@export var accelerationSpeedFactor := 1.0 / 60.0
 @export var isLevelMoving := false
 
 @export_group("Trunk")
-@export var minDelayTrunk := 0.5
-@export var maxDelayTrunk := 2.0
+@export var minDelayTrunk := 0.8
+@export var maxDelayTrunk := 2.2
 @export var trunk : PackedScene
 
 
 
 @export_group("Peon")
 @export var minDelay := 0.3
-@export var maxDelay := 2.5
+@export var maxDelay := 2.2
 @export_range(0.0, 1.0) var ProbaDevil := 0.33
 @export var devil : PackedScene
 @export var innocent : PackedScene
@@ -26,8 +28,10 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if isLevelMoving:
+		currentSpeedFactor += accelerationSpeedFactor * delta
+		
 		# move all of its childs.
-		var motionVector := Vector2(-speed * delta, 0.0)
+		var motionVector := Vector2(-speed * delta * currentSpeedFactor, 0.0)
 		for child in $ToMove.get_children():
 			if child is PhysicsBody2D:
 				child.move_and_collide(motionVector)
@@ -56,10 +60,10 @@ func spawnTrunk():
 
 func startNextTrunkSpawnTimer():
 	# random time between minTime & MaxTime
-	var rngDelay := minDelayTrunk + randf() * (maxDelayTrunk - minDelayTrunk)
+	var rngDelay := minDelayTrunk / currentSpeedFactor + randf() * (maxDelayTrunk / currentSpeedFactor)
 	$TrunkTimer.start(rngDelay)
 	
 func startNextPeonSpawnTimer():
 	# random time between minTime & MaxTime
-	var rngDelay := minDelay + randf() * (maxDelay - minDelay)
+	var rngDelay := minDelay / currentSpeedFactor + randf() * (maxDelay / currentSpeedFactor)
 	$PeonTimer.start(rngDelay)
