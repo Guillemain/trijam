@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://3qi8m1jqrino"]
+[gd_scene load_steps=7 format=3 uid="uid://3qi8m1jqrino"]
 
 [ext_resource type="Texture2D" uid="uid://bd38e2ar0j8jt" path="res://icon.svg" id="1_vru3r"]
 [ext_resource type="Script" path="res://Mort/mort_o_cycle.gd" id="1_x7gfg"]
 [ext_resource type="Script" path="res://Mort/ScytheArea.gd" id="3_6c2rx"]
+[ext_resource type="PackedScene" uid="uid://cdq0ql7bgtbmq" path="res://Mort/mort_rendere.tscn" id="4_ly27x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jgv20"]
 size = Vector2(190, 107)
@@ -23,6 +24,7 @@ position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_jgv20")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 scale = Vector2(1.49414, 0.854874)
 texture = ExtResource("1_vru3r")
 
@@ -39,4 +41,9 @@ script = ExtResource("3_6c2rx")
 shape = SubResource("RectangleShape2D_33n8q")
 debug_color = Color(0.980392, 0, 0.368627, 0.419608)
 
+[node name="MortRendere" parent="." instance=ExtResource("4_ly27x")]
+position = Vector2(-10, -85)
+scale = Vector2(0.539273, 0.539273)
+
+[connection signal="startAttack" from="." to="MortRendere" method="_on_mortocycle_start_attack"]
 [connection signal="timeout" from="AttackDuration" to="." method="_on_attack_duration_timeout"]

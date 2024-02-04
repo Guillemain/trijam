@@ -6,7 +6,7 @@ var mechant: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	mechant = get_parent().peonType == 1
+	mechant = get_parent().peonType == 0
 	
 	if(mechant):
 		$AnimatedSprite2D.animation = "mechant"
