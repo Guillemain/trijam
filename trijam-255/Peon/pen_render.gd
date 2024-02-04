@@ -17,4 +17,6 @@ func _ready():
 func _on_peon_is_killed():
 	$AnimatedSprite2D.animation = "dead"
 	var efx = died_effct.instantiate()
+	
 	get_parent().get_parent().add_child(efx)
+	efx.global_position = global_position

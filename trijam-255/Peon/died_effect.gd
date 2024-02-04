@@ -6,8 +6,6 @@ func _ready():
 	play_died()
 
 func play_died():
-	$Explosion.visible = true
-	$Ame.visible = true
 	$Explosion.play("default")
 	$Ame.play("default")
 	var tween := get_tree().create_tween()
