@@ -32,18 +32,21 @@ func _physics_process(delta):
 			if child is PhysicsBody2D:
 				child.move_and_collide(motionVector)
 
-func spawnSomething(sceneToSpawn : PackedScene):
+func spawnSomething(sceneToSpawn : PackedScene) -> Node:
 	var instance = sceneToSpawn.instantiate()
 	instance.position = $Spawn.position
 	$ToMove.add_child(instance)
+	return instance
 
 func randomPeonSpawn():
 	# Chose what to spawn
 	var random_float = randf()
 	if random_float < ProbaDevil:
-		spawnSomething(devil)
+		var instance = spawnSomething(devil) as Peon
+		instance.isKilled.connect(%GameManager.PeonSlayed.bind(Peon.EPeonType.DEVIL))
 	else:
-		spawnSomething(innocent)
+		var instance = spawnSomething(innocent) as Peon
+		instance.isKilled.connect(%GameManager.PeonSlayed.bind(Peon.EPeonType.INNOCENT))
 		
 	startNextPeonSpawnTimer()
 
