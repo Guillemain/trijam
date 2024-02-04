@@ -21,3 +21,4 @@ func hit():
 		isAlive = false
 		isKilled.emit()
 		print("Peon killed")
+		get_tree().get_nodes_in_group("cam")[0].doShake()

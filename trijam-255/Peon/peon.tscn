@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://b0nr5ynvf8vak"]
+[gd_scene load_steps=6 format=3 uid="uid://b0nr5ynvf8vak"]
 
 [ext_resource type="Texture2D" uid="uid://bd38e2ar0j8jt" path="res://icon.svg" id="1_ayyln"]
 [ext_resource type="Script" path="res://Peon/peon.gd" id="1_vj08f"]
 [ext_resource type="PackedScene" uid="uid://d3go3s3boxmqv" path="res://Peon/pen_render.tscn" id="3_wp66r"]
+[ext_resource type="AudioStream" uid="uid://bhla1eb8guvr2" path="res://Peon/mort.wav" id="4_l6pgi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oncc7"]
 size = Vector2(115, 122)
@@ -25,7 +26,14 @@ position = Vector2(0.5, -52)
 shape = SubResource("RectangleShape2D_oncc7")
 
 [node name="PenRender" parent="." instance=ExtResource("3_wp66r")]
-position = Vector2(5, -30)
+position = Vector2(3, -88)
 scale = Vector2(0.36425, 0.36425)
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_l6pgi")
+volume_db = -7.051
+pitch_scale = 0.86
+bus = &"FX"
+
 [connection signal="isKilled" from="." to="PenRender" method="_on_peon_is_killed"]
+[connection signal="isKilled" from="." to="AudioStreamPlayer" method="play"]

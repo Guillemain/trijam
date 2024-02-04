@@ -1,12 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://3qi8m1jqrino"]
+[gd_scene load_steps=9 format=3 uid="uid://3qi8m1jqrino"]
 
 [ext_resource type="Texture2D" uid="uid://bd38e2ar0j8jt" path="res://icon.svg" id="1_vru3r"]
 [ext_resource type="Script" path="res://Mort/mort_o_cycle.gd" id="1_x7gfg"]
 [ext_resource type="Script" path="res://Mort/ScytheArea.gd" id="3_6c2rx"]
 [ext_resource type="PackedScene" uid="uid://cdq0ql7bgtbmq" path="res://Mort/mort_rendere.tscn" id="4_ly27x"]
+[ext_resource type="AudioStream" uid="uid://dxr0e60lix1wl" path="res://Mort/Attaqueson.wav" id="5_n88jk"]
+[ext_resource type="AudioStream" uid="uid://k5mt86ffh620" path="res://Mort/jump.wav" id="6_n2lht"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jgv20"]
-size = Vector2(190, 107)
+size = Vector2(115, 107)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_33n8q"]
 size = Vector2(54, 107)
@@ -20,7 +22,7 @@ normalGravity = -30.0
 stoppingGravity = -100.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -0.5)
+position = Vector2(37.5, -0.5)
 shape = SubResource("RectangleShape2D_jgv20")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -45,6 +47,20 @@ debug_color = Color(0.980392, 0, 0.368627, 0.419608)
 position = Vector2(-10, -85)
 scale = Vector2(0.539273, 0.539273)
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_n88jk")
+volume_db = -5.288
+bus = &"FX"
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_n2lht")
+volume_db = -6.169
+pitch_scale = 1.27
+max_polyphony = 2
+bus = &"FX"
+
 [connection signal="startAttack" from="." to="MortRendere" method="_on_mortocycle_start_attack"]
+[connection signal="startAttack" from="." to="AudioStreamPlayer" method="play"]
 [connection signal="startJump" from="." to="MortRendere" method="_on_mortocycle_start_jump"]
+[connection signal="startJump" from="." to="AudioStreamPlayer2" method="play"]
 [connection signal="timeout" from="AttackDuration" to="." method="_on_attack_duration_timeout"]

@@ -9,6 +9,8 @@ extends Node2D
 # j'aime pas avoir un peon sur un trunck
 
 @export var proba_trunk = 0.5 # probability of trunk spawn instead of a peon.
+var last_time_was_block = false
+
 
 @export_group("Trunk")
 @export var minDelayTrunk := 0.8
@@ -53,10 +55,12 @@ func spawnSomething(sceneToSpawn : PackedScene) -> Node:
 func randomPeonSpawn():
 	# Chose what to spawn
 	var random_float = randf()
-	if random_float < proba_trunk:
+	if (random_float < proba_trunk) and not(last_time_was_block):
 		spawnSomething(trunk)
-		startNextPeonSpawnTimer()
+		last_time_was_block = true
+		startNextTrunkSpawnTimer()
 	else:
+		last_time_was_block = false
 		random_float = randf()
 		if random_float < ProbaDevil:
 			var instance = spawnSomething(devil) as Peon
@@ -65,7 +69,7 @@ func randomPeonSpawn():
 			var instance = spawnSomething(innocent) as Peon
 			instance.isKilled.connect(%GameManager.PeonSlayed.bind("INNOCENT"))
 			
-	startNextPeonSpawnTimer()
+		startNextPeonSpawnTimer()
 
 func spawnTrunk():
 	pass
@@ -74,8 +78,8 @@ func spawnTrunk():
 
 func startNextTrunkSpawnTimer():
 	# random time between minTime & MaxTime
-	var rngDelay := minDelayTrunk / currentSpeedFactor + randf() * (maxDelayTrunk / currentSpeedFactor)
-	$TrunkTimer.start(rngDelay)
+	var rngDelay := (minDelay*1.5) / currentSpeedFactor + randf() * ((maxDelay*1.5) / currentSpeedFactor)
+	$PeonTimer.start(rngDelay)
 	
 func startNextPeonSpawnTimer():
 	# random time between minTime & MaxTime

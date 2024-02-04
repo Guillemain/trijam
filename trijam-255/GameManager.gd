@@ -28,6 +28,8 @@ func _process(delta):
 		return
 	
 	if isDead:
+		if Input.is_action_pressed("restart"):
+			restart()
 		return
 		
 	# raise score every second
@@ -65,6 +67,10 @@ func endGame():
 	if isDead:
 		return
 		
+	var tween = get_tree().create_tween()
+	tween.tween_property($"../AudioStreamPlayer","pitch_scale",0.8,0.3)
+	
+	
 	isDead = true
 	%Level.isLevelMoving = false
 	%FinalScore.text = %FinalScore.text + str(score)

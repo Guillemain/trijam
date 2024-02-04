@@ -1,0 +1,7 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cqbpbx7vflecu"]
+
+[ext_resource type="FontFile" uid="uid://b8vbvv6wc42nk" path="res://Mort/Comicy.otf" id="1_58csf"]
+
+[resource]
+default_font = ExtResource("1_58csf")
+default_font_size = 80

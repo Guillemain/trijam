@@ -1,12 +1,17 @@
-[gd_scene load_steps=11 format=3 uid="uid://c74p6yghswvn"]
+[gd_scene load_steps=16 format=3 uid="uid://c74p6yghswvn"]
 
 [ext_resource type="PackedScene" uid="uid://3qi8m1jqrino" path="res://Mort/mort_o_cycle.tscn" id="1_1uop1"]
 [ext_resource type="Script" path="res://Level.gd" id="2_c64df"]
 [ext_resource type="PackedScene" uid="uid://b0nr5ynvf8vak" path="res://Peon/peon.tscn" id="2_lnovw"]
 [ext_resource type="PackedScene" uid="uid://bw3ogj7xiaj3i" path="res://Trunk/trunk.tscn" id="3_tgrgu"]
 [ext_resource type="PackedScene" uid="uid://bb8phikbuvpaw" path="res://Peon/devil.tscn" id="4_ldifs"]
+[ext_resource type="Texture2D" uid="uid://dejwgrsayjdto" path="res://Trunk/road.png" id="6_703sl"]
 [ext_resource type="Script" path="res://GameManager.gd" id="6_p4xbc"]
 [ext_resource type="Texture2D" uid="uid://bd38e2ar0j8jt" path="res://icon.svg" id="7_onu42"]
+[ext_resource type="Script" path="res://roadoffset.gd" id="7_tf6ec"]
+[ext_resource type="AudioStream" uid="uid://cjdi0xh85rqc7" path="res://musicloop.mp3" id="8_tlvtd"]
+[ext_resource type="Theme" uid="uid://cqbpbx7vflecu" path="res://themedebase.tres" id="9_kyy20"]
+[ext_resource type="Script" path="res://shake.gd" id="11_k44ep"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_gj4k8"]
 a = Vector2(-217, 0)
@@ -31,6 +36,7 @@ a = Vector2(-2, 683)
 [node name="Node2D" type="Node2D"]
 
 [node name="Mort-o-cycle" parent="." instance=ExtResource("1_1uop1")]
+z_index = 20
 position = Vector2(175, 543)
 
 [node name="Level" type="Node2D" parent="."]
@@ -41,7 +47,9 @@ accelerationSpeedFactor = 0.04
 isLevelMoving = true
 maxDelayTrunk = 3.0
 trunk = ExtResource("3_tgrgu")
-ProbaDevil = 0.332
+minDelay = 0.435
+maxDelay = 1.95
+ProbaDevil = 0.729
 devil = ExtResource("4_ldifs")
 innocent = ExtResource("2_lnovw")
 
@@ -57,7 +65,7 @@ position = Vector2(351, 584)
 position = Vector2(1035, 570)
 
 [node name="Spawn" type="Node2D" parent="Level"]
-position = Vector2(1291, 593)
+position = Vector2(1626, 559)
 
 [node name="TrunkTimer" type="Timer" parent="Level"]
 
@@ -71,6 +79,15 @@ collision_layer = 2
 position = Vector2(-2, 2)
 shape = SubResource("SegmentShape2D_gj4k8")
 debug_color = Color(0.956863, 0, 0.52549, 0.419608)
+
+[node name="Polygon2D" type="Polygon2D" parent="Floor"]
+z_index = -345
+texture_repeat = 2
+position = Vector2(-337, -121)
+texture = ExtResource("6_703sl")
+polygon = PackedVector2Array(1.5873, 1.5873, 1917.46, 3.1746, 1915.87, 198.413, 683.968, 196.37, 1.5873, 195.238)
+uv = PackedVector2Array(1.5873, 1.5873, 1917.46, 3.1746, 1915.87, 198.413, 1.5873, 195.238)
+script = ExtResource("7_tf6ec")
 
 [node name="KillZone" type="Area2D" parent="."]
 position = Vector2(-267, 0)
@@ -87,11 +104,13 @@ unique_name_in_owner = true
 script = ExtResource("6_p4xbc")
 
 [node name="Score Panel" type="Control" parent="GameManager"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -20.0
+offset_top = 106.0
+offset_right = 20.0
+offset_bottom = 146.0
+theme = ExtResource("9_kyy20")
 
 [node name="MarginContainer" type="MarginContainer" parent="GameManager/Score Panel"]
 layout_mode = 0
@@ -116,10 +135,14 @@ text = "0"
 visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -9.0
+offset_top = 3.0
+offset_right = 31.0
+offset_bottom = 43.0
+theme = ExtResource("9_kyy20")
 
 [node name="TextureRect" type="TextureRect" parent="GameManager/DeathPanel"]
+visible = false
 layout_mode = 0
 offset_left = 522.0
 offset_top = 73.0
@@ -161,13 +184,14 @@ horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="GameManager/DeathPanel"]
 layout_mode = 0
-offset_left = 429.0
-offset_top = 413.0
-offset_right = 720.0
-offset_bottom = 498.0
-theme_override_colors/font_color = Color(1, 0, 0, 1)
+offset_left = 364.0
+offset_top = 397.0
+offset_right = 754.0
+offset_bottom = 482.0
+theme_override_colors/font_color = Color(0.745098, 0.141176, 0.239216, 1)
 theme_override_font_sizes/font_size = 56
-text = "Try Again !"
+text = "Try Again ! (press R)
+"
 
 [node name="TutoPanel" type="Control" parent="GameManager"]
 layout_mode = 3
@@ -177,20 +201,22 @@ offset_bottom = 40.0
 
 [node name="RichTextLabel" type="RichTextLabel" parent="GameManager/TutoPanel"]
 layout_mode = 0
-offset_left = 306.0
-offset_top = 37.0
-offset_right = 879.0
-offset_bottom = 322.0
+offset_left = 457.0
+offset_top = 129.0
+offset_right = 1030.0
+offset_bottom = 414.0
+theme = ExtResource("9_kyy20")
 theme_override_font_sizes/normal_font_size = 31
 bbcode_enabled = true
 text = "[center]You are the Death itself, in charge of puryfying the world of the darkness within it.[/center]"
 
 [node name="Trunk" type="Label" parent="GameManager/TutoPanel"]
 layout_mode = 0
-offset_left = 585.0
-offset_top = 379.0
-offset_right = 920.0
-offset_bottom = 493.0
+offset_left = 540.0
+offset_top = 424.0
+offset_right = 942.0
+offset_bottom = 538.0
+theme = ExtResource("9_kyy20")
 theme_override_font_sizes/font_size = 26
 text = "Avoid those obstacles by 
 jumping over them
@@ -199,10 +225,11 @@ horizontal_alignment = 1
 
 [node name="Trunk2" type="Label" parent="GameManager/TutoPanel"]
 layout_mode = 0
-offset_left = 867.0
-offset_top = 341.0
-offset_right = 1202.0
-offset_bottom = 455.0
+offset_left = 863.0
+offset_top = 333.0
+offset_right = 1198.0
+offset_bottom = 447.0
+theme = ExtResource("9_kyy20")
 theme_override_font_sizes/font_size = 26
 text = "Spare theses
 INNOCENTS"
@@ -210,19 +237,31 @@ horizontal_alignment = 1
 
 [node name="Trunk3" type="Label" parent="GameManager/TutoPanel"]
 layout_mode = 0
-offset_left = 162.0
-offset_top = 284.0
-offset_right = 512.0
-offset_bottom = 398.0
+offset_left = 191.0
+offset_top = 331.0
+offset_right = 541.0
+offset_bottom = 445.0
+theme = ExtResource("9_kyy20")
 theme_override_font_sizes/font_size = 26
 text = "Slay thoses
 corrupted Being
 with K"
 horizontal_alignment = 1
 
+[node name="Camera2D" type="Camera2D" parent="." groups=["cam"]]
+position = Vector2(585, 356)
+script = ExtResource("11_k44ep")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_tlvtd")
+autoplay = true
+bus = &"Music"
+
 [connection signal="hitATrunk" from="Mort-o-cycle" to="GameManager" method="trunkHit"]
+[connection signal="hitATrunk" from="Mort-o-cycle" to="Camera2D" method="doShake"]
 [connection signal="isKilled" from="Level/ToMove/Devil" to="GameManager" method="PeonSlayed" binds= ["DEVIL"]]
 [connection signal="isKilled" from="Level/ToMove/Peon" to="GameManager" method="PeonSlayed" binds= ["INNOCENT"]]
 [connection signal="timeout" from="Level/TrunkTimer" to="Level" method="spawnTrunk"]
 [connection signal="timeout" from="Level/PeonTimer" to="Level" method="randomPeonSpawn"]
 [connection signal="pressed" from="GameManager/DeathPanel/Button" to="GameManager" method="restart"]
+[connection signal="finished" from="AudioStreamPlayer" to="AudioStreamPlayer" method="play"]

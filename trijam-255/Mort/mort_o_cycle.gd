@@ -12,7 +12,7 @@ signal startJump
 signal stopJump
 
 var numberFrameJumpPressed := 0
-const RECENT_JUMP_FRAME_NB := 5
+const RECENT_JUMP_FRAME_NB := 10
 
 @export_group("Attack")
 var isAttacking := false
