@@ -7,6 +7,7 @@
 size = Vector2(190, 107)
 
 [node name="Mort-o-cycle" type="CharacterBody2D"]
+collision_mask = 2
 slide_on_ceiling = false
 floor_stop_on_slope = false
 floor_constant_speed = true

@@ -6,6 +6,8 @@
 radius = 47.0106
 
 [node name="Trunk" type="AnimatableBody2D"]
+collision_layer = 6
+collision_mask = 17
 sync_to_physics = false
 
 [node name="Sprite" type="Sprite2D" parent="."]
