@@ -88,5 +88,5 @@ visible = false
 position = Vector2(-1, -2)
 scale = Vector2(0.445, 0.445)
 sprite_frames = SubResource("SpriteFrames_3vuxe")
-frame_progress = 0.0488071
+frame_progress = 0.442373
 offset = Vector2(19, 73)
