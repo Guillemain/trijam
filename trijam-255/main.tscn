@@ -48,13 +48,13 @@ innocent = ExtResource("2_lnovw")
 [node name="ToMove" type="Node2D" parent="Level"]
 
 [node name="Trunk" parent="Level/ToMove" instance=ExtResource("3_tgrgu")]
-position = Vector2(514, 600)
+position = Vector2(741, 582)
 
 [node name="Devil" parent="Level/ToMove" instance=ExtResource("4_ldifs")]
-position = Vector2(990, 574)
+position = Vector2(351, 584)
 
 [node name="Peon" parent="Level/ToMove" instance=ExtResource("2_lnovw")]
-position = Vector2(731, 575)
+position = Vector2(1035, 570)
 
 [node name="Spawn" type="Node2D" parent="Level"]
 position = Vector2(1291, 593)
@@ -87,6 +87,7 @@ unique_name_in_owner = true
 script = ExtResource("6_p4xbc")
 
 [node name="Score Panel" type="Control" parent="GameManager"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -112,6 +113,7 @@ layout_mode = 2
 text = "0"
 
 [node name="DeathPanel" type="Control" parent="GameManager"]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -168,7 +170,6 @@ theme_override_font_sizes/font_size = 56
 text = "Try Again !"
 
 [node name="TutoPanel" type="Control" parent="GameManager"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -186,10 +187,10 @@ text = "[center]You are the Death itself, in charge of puryfying the world of th
 
 [node name="Trunk" type="Label" parent="GameManager/TutoPanel"]
 layout_mode = 0
-offset_left = 134.0
-offset_top = 243.0
-offset_right = 469.0
-offset_bottom = 357.0
+offset_left = 585.0
+offset_top = 379.0
+offset_right = 920.0
+offset_bottom = 493.0
 theme_override_font_sizes/font_size = 26
 text = "Avoid those obstacles by 
 jumping over them
@@ -198,10 +199,10 @@ horizontal_alignment = 1
 
 [node name="Trunk2" type="Label" parent="GameManager/TutoPanel"]
 layout_mode = 0
-offset_left = 450.0
-offset_top = 317.0
-offset_right = 785.0
-offset_bottom = 431.0
+offset_left = 867.0
+offset_top = 341.0
+offset_right = 1202.0
+offset_bottom = 455.0
 theme_override_font_sizes/font_size = 26
 text = "Spare theses
 INNOCENTS"
@@ -209,10 +210,10 @@ horizontal_alignment = 1
 
 [node name="Trunk3" type="Label" parent="GameManager/TutoPanel"]
 layout_mode = 0
-offset_left = 798.0
-offset_top = 171.0
-offset_right = 1148.0
-offset_bottom = 285.0
+offset_left = 162.0
+offset_top = 284.0
+offset_right = 512.0
+offset_bottom = 398.0
 theme_override_font_sizes/font_size = 26
 text = "Slay thoses
 corrupted Being

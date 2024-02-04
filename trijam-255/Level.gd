@@ -5,6 +5,11 @@ extends Node2D
 @export var accelerationSpeedFactor := 1.0 / 60.0
 @export var isLevelMoving := false
 
+# Ajoute d'Aune :
+# j'aime pas avoir un peon sur un trunck
+
+@export var proba_trunk = 0.5 # probability of trunk spawn instead of a peon.
+
 @export_group("Trunk")
 @export var minDelayTrunk := 0.8
 @export var maxDelayTrunk := 2.2
@@ -15,9 +20,12 @@ extends Node2D
 @export_group("Peon")
 @export var minDelay := 0.3
 @export var maxDelay := 2.2
-@export_range(0.0, 1.0) var ProbaDevil := 0.33
+@export_range(0.0, 1.0) var ProbaDevil := 0.7
 @export var devil : PackedScene
 @export var innocent : PackedScene
+
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -45,18 +53,24 @@ func spawnSomething(sceneToSpawn : PackedScene) -> Node:
 func randomPeonSpawn():
 	# Chose what to spawn
 	var random_float = randf()
-	if random_float < ProbaDevil:
-		var instance = spawnSomething(devil) as Peon
-		instance.isKilled.connect(%GameManager.PeonSlayed.bind("DEVIL"))
+	if random_float < proba_trunk:
+		spawnSomething(trunk)
+		startNextPeonSpawnTimer()
 	else:
-		var instance = spawnSomething(innocent) as Peon
-		instance.isKilled.connect(%GameManager.PeonSlayed.bind("INNOCENT"))
-		
+		random_float = randf()
+		if random_float < ProbaDevil:
+			var instance = spawnSomething(devil) as Peon
+			instance.isKilled.connect(%GameManager.PeonSlayed.bind("DEVIL"))
+		else:
+			var instance = spawnSomething(innocent) as Peon
+			instance.isKilled.connect(%GameManager.PeonSlayed.bind("INNOCENT"))
+			
 	startNextPeonSpawnTimer()
 
 func spawnTrunk():
-	spawnSomething(trunk)
-	startNextTrunkSpawnTimer()
+	pass
+	#spawnSomething(trunk)
+	#startNextTrunkSpawnTimer()
 
 func startNextTrunkSpawnTimer():
 	# random time between minTime & MaxTime
