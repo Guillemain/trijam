@@ -33,6 +33,7 @@ a = Vector2(-2, 683)
 position = Vector2(175, 543)
 
 [node name="Level" type="Node2D" parent="."]
+unique_name_in_owner = true
 position = Vector2(1, -1)
 script = ExtResource("2_c64df")
 speed = 600.0
@@ -103,7 +104,7 @@ text = "Score : "
 [node name="Score" type="Label" parent="GameManager/Score Panel/MarginContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "scoreICI"
+text = "0"
 
 [connection signal="hitATrunk" from="Mort-o-cycle" to="GameManager" method="trunkHit"]
 [connection signal="timeout" from="Level/TrunkTimer" to="Level" method="spawnTrunk"]

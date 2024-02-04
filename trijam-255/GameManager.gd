@@ -7,15 +7,23 @@ extends Node2D
 @export var scoreDelta := 5
 var timeElapsed := 0.0
 
+var gameStarted := false
+signal gameStart
+
 signal endOfGame(String)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	%Level.isLevelMoving = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if !gameStarted:
+		if Input.is_action_pressed("attack"):
+			startGame()
+		return
+		
 	# raise score every second
 	timeElapsed += delta
 	if timeElapsed >= 0.25:
@@ -36,3 +44,9 @@ func PeonSlayed(type : Peon.EPeonType):
 
 func trunkHit():
 	endOfGame.emit("You fell and broke your femur... Outch !")
+
+
+func startGame():
+	gameStart.emit()
+	gameStarted = true
+	%Level.isLevelMoving = true
