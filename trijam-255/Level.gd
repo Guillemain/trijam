@@ -43,10 +43,10 @@ func randomPeonSpawn():
 	var random_float = randf()
 	if random_float < ProbaDevil:
 		var instance = spawnSomething(devil) as Peon
-		instance.isKilled.connect(%GameManager.PeonSlayed.bind(Peon.EPeonType.DEVIL))
+		instance.isKilled.connect(%GameManager.PeonSlayed.bind("DEVIL"))
 	else:
 		var instance = spawnSomething(innocent) as Peon
-		instance.isKilled.connect(%GameManager.PeonSlayed.bind(Peon.EPeonType.INNOCENT))
+		instance.isKilled.connect(%GameManager.PeonSlayed.bind("INNOCENT"))
 		
 	startNextPeonSpawnTimer()
 

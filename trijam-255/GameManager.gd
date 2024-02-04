@@ -10,11 +10,14 @@ var timeElapsed := 0.0
 var gameStarted := false
 signal gameStart
 
-signal endOfGame(String)
+var isDead := false
+signal endOfGame()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	%Level.isLevelMoving = false
+	$DeathPanel.visible = false
+	$TutoPanel.visible = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -22,6 +25,9 @@ func _process(delta):
 	if !gameStarted:
 		if Input.is_action_pressed("attack"):
 			startGame()
+		return
+	
+	if isDead:
 		return
 		
 	# raise score every second
@@ -33,20 +39,37 @@ func _process(delta):
 	%Score.text = str(score)
 	
 
-func PeonSlayed(type : Peon.EPeonType):
-	if type == Peon.EPeonType.DEVIL:
+func PeonSlayed(type : String):
+	if type == "DEVIL":
 		print("Killed DEVIL")
 		score += scoreDevil
 	else:
 		print("Killed INNOCENT")
-		endOfGame.emit("You killed an INNOCENT Soul...")
+		%DeathReason.text = "You killed an INNOCENT Soul..."
+		endGame()
 
 
 func trunkHit():
-	endOfGame.emit("You fell and broke your femur... Outch !")
+	%DeathReason.text = "You fell and broke your femur... Outch !"
+	endGame()
 
 
 func startGame():
 	gameStart.emit()
 	gameStarted = true
 	%Level.isLevelMoving = true
+	$TutoPanel.visible = false
+
+
+func endGame():
+	if isDead:
+		return
+		
+	isDead = true
+	%Level.isLevelMoving = false
+	%FinalScore.text = %FinalScore.text + str(score)
+	endOfGame.emit()
+	$DeathPanel.visible = true
+
+func restart():
+	get_tree().reload_current_scene()
